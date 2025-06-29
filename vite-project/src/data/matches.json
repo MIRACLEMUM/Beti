@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "home": "Arsenal",
+    "away": "Chelsea",
+    "status": "Upcoming",
+    "league": "Premier League",
+    "probabilities": [45, 30, 25],
+    "prediction": "1"
+  },
+  {
+    "id": 2,
+    "home": "Barcelona",
+    "away": "Real Madrid",
+    "status": "Finished",
+    "league": "La Liga",
+    "probabilities": [40, 25, 35],
+    "prediction": "2"
+  },
+  {
+    "id": 3,
+    "home": "Liverpool",
+    "away": "Man City",
+    "status": "Upcoming",
+    "league": "Premier League",
+    "probabilities": [35, 35, 30],
+    "prediction": "X"
+  },
+  {
+    "id": 4,
+    "home": "PSG",
+    "away": "Lyon",
+    "status": "Upcoming",
+    "league": "Ligue 1",
+    "probabilities": [60, 25, 15],
+    "prediction": "1"
+  }
+]
