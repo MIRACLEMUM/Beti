@@ -22,6 +22,8 @@ export default function Header() {
     navigate("/");
   };
 
+  const isFreeUser = user && !user.subscribed;
+
   return (
     <header className="bg-white shadow-md fixed top-0 left-0 w-full z-50">
       <div className="max-w-7xl mx-auto flex justify-between items-center px-4 sm:px-6 py-3">
@@ -35,6 +37,12 @@ export default function Header() {
           <Link to="/" className="text-gray-700 hover:text-blue-600 font-medium">
             Home
           </Link>
+
+          {isFreeUser && (
+            <Link to="/subscribe" className="text-yellow-600 hover:underline font-medium">
+              Subscribe
+            </Link>
+          )}
 
           {!user ? (
             <>
@@ -73,16 +81,38 @@ export default function Header() {
       {menuOpen && (
         <div className="md:hidden bg-white border-t shadow-sm">
           <nav className="flex flex-col px-4 py-3 space-y-2 text-sm">
-            <Link to="/" onClick={() => setMenuOpen(false)} className="py-2 border-b text-gray-700 hover:bg-gray-100">
+            <Link
+              to="/"
+              onClick={() => setMenuOpen(false)}
+              className="py-2 border-b text-gray-700 hover:bg-gray-100"
+            >
               Home
             </Link>
 
+            {isFreeUser && (
+              <Link
+                to="/subscribe"
+                onClick={() => setMenuOpen(false)}
+                className="py-2 border-b text-yellow-600 hover:bg-yellow-100 font-medium"
+              >
+                Subscribe
+              </Link>
+            )}
+
             {!user ? (
               <>
-                <Link to="/login" onClick={() => setMenuOpen(false)} className="py-2 border-b text-gray-700 hover:bg-gray-100">
+                <Link
+                  to="/login"
+                  onClick={() => setMenuOpen(false)}
+                  className="py-2 border-b text-gray-700 hover:bg-gray-100"
+                >
                   Login
                 </Link>
-                <Link to="/signup" onClick={() => setMenuOpen(false)} className="py-2 border-b text-gray-700 hover:bg-gray-100">
+                <Link
+                  to="/signup"
+                  onClick={() => setMenuOpen(false)}
+                  className="py-2 border-b text-gray-700 hover:bg-gray-100"
+                >
                   Sign Up
                 </Link>
               </>

@@ -1,3 +1,4 @@
+// src/pages/LoginPage.jsx
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Toast from "../components/Toast";
@@ -21,7 +22,7 @@ export default function LoginPage() {
       setToastMessage("Login successful ✅");
 
       setTimeout(() => {
-        navigate("/dashboard");
+        navigate("/");
       }, 1000);
     } else {
       alert("Invalid email or password");

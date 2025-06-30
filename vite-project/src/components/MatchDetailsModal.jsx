@@ -1,25 +1,6 @@
-import { useState } from "react";
-import { useBet } from "../context/BetContext";
-
+// src/components/MatchDetailsModal.jsx
 export default function MatchDetailsModal({ match, onClose }) {
-  const [showBetForm, setShowBetForm] = useState(false);
-  const [stake, setStake] = useState("");
-  const { placeBet } = useBet();
-
   if (!match) return null;
-
-  const handleBetSubmit = () => {
-    if (!stake || isNaN(stake)) {
-      alert("Please enter a valid amount.");
-      return;
-    }
-
-    placeBet(match, stake);
-    alert(`✅ Bet placed on ${match.home} vs ${match.away} with ₦${stake}`);
-    setStake("");
-    setShowBetForm(false);
-    onClose();
-  };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 px-4 sm:px-6">
@@ -65,32 +46,6 @@ export default function MatchDetailsModal({ match, onClose }) {
             Prediction: {match.prediction}
           </span>
         </div>
-
-        {/* Bet Form */}
-        {showBetForm ? (
-          <div className="mt-4">
-            <input
-              type="number"
-              placeholder="Enter stake amount"
-              value={stake}
-              onChange={(e) => setStake(e.target.value)}
-              className="w-full border px-3 py-2 rounded mb-3 text-sm sm:text-base"
-            />
-            <button
-              onClick={handleBetSubmit}
-              className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-500"
-            >
-              Confirm Bet
-            </button>
-          </div>
-        ) : (
-          <button
-            onClick={() => setShowBetForm(true)}
-            className="w-full bg-yellow-400 hover:bg-yellow-300 text-black font-semibold py-2 rounded"
-          >
-            Place Bet
-          </button>
-        )}
       </div>
     </div>
   );

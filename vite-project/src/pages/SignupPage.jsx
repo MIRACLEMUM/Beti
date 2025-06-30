@@ -1,3 +1,4 @@
+// src/pages/SignupPage.jsx
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Toast from "../components/Toast";
@@ -12,9 +13,14 @@ export default function SignupPage() {
   const handleSignup = (e) => {
     e.preventDefault();
 
-    const user = { username, email, password };
-    localStorage.setItem("registeredUser", JSON.stringify(user));
+    const user = {
+      username,
+      email,
+      password,
+      subscribed: false, // 🔑 freemium flag
+    };
 
+    localStorage.setItem("registeredUser", JSON.stringify(user));
     setToastMessage("Signup successful 🎉");
 
     setTimeout(() => {

@@ -1,17 +1,7 @@
 // src/components/MatchCard.jsx
-import { useState } from "react";
-import { useBet } from "../context/BetContext";
+import React from "react";
 
 export default function MatchCard({ match, onClick }) {
-  const { updateBetsWithResult } = useBet();
-  const [result, setResult] = useState("");
-
-  const handleResultChange = (e) => {
-    const selected = e.target.value;
-    setResult(selected);
-    updateBetsWithResult(match.id, selected);
-  };
-
   return (
     <div
       onClick={() => onClick(match)}
@@ -42,28 +32,10 @@ export default function MatchCard({ match, onClick }) {
       </div>
 
       {/* Prediction */}
-      <div className="text-sm sm:text-base text-center mb-4">
+      <div className="text-sm sm:text-base text-center">
         <span className="bg-yellow-300 px-3 py-1 rounded-full font-medium text-black inline-block">
           Prediction: {match.prediction}
         </span>
-      </div>
-
-      {/* Admin Simulation */}
-      <div
-        onClick={(e) => e.stopPropagation()}
-        className="flex flex-col sm:flex-row sm:items-center gap-2"
-      >
-        <label className="text-sm text-gray-600">Simulate result:</label>
-        <select
-          value={result}
-          onChange={handleResultChange}
-          className="border px-3 py-1 rounded text-sm w-full sm:w-auto"
-        >
-          <option value="">-- Choose Result --</option>
-          <option value="home">🏠 Home Win</option>
-          <option value="draw">⚖️ Draw</option>
-          <option value="away">🚀 Away Win</option>
-        </select>
       </div>
     </div>
   );
