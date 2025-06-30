@@ -1,5 +1,3 @@
-// src/components/CardContainer.jsx
-
 import { useState } from "react";
 import MatchCard from "./MatchCard";
 import TabFilter from "./TabFilter";
@@ -15,7 +13,8 @@ export default function CardContainer() {
   const availableLeagues = [...new Set(matches.map((m) => m.league))];
 
   const filteredMatches = matches.filter((m) => {
-    const matchStatus = activeTab === "All" || m.status.toLowerCase() === activeTab.toLowerCase();
+    const matchStatus =
+      activeTab === "All" || m.status.toLowerCase() === activeTab.toLowerCase();
     const matchLeague = selectedLeague === "All" || m.league === selectedLeague;
     return matchStatus && matchLeague;
   });
@@ -23,7 +22,7 @@ export default function CardContainer() {
   const visibleMatches = filteredMatches.slice(0, visibleCount);
 
   return (
-    <div className="space-y-4 mt-6">
+    <div className="px-4 sm:px-6 md:px-8 mt-6 space-y-6 max-w-4xl mx-auto">
       <TabFilter
         activeTab={activeTab}
         onTabChange={(tab) => {
@@ -38,19 +37,21 @@ export default function CardContainer() {
         availableLeagues={availableLeagues}
       />
 
-      {visibleMatches.length > 0 ? (
-        visibleMatches.map((match) => (
-          <MatchCard key={match.id} match={match} onClick={setSelectedMatch} />
-        ))
-      ) : (
-        <p className="text-gray-500 text-center">No matches found.</p>
-      )}
+      <div className="space-y-4">
+        {visibleMatches.length > 0 ? (
+          visibleMatches.map((match) => (
+            <MatchCard key={match.id} match={match} onClick={setSelectedMatch} />
+          ))
+        ) : (
+          <p className="text-center text-gray-500">No matches found.</p>
+        )}
+      </div>
 
       {visibleCount < filteredMatches.length && (
-        <div className="text-center mt-4">
+        <div className="text-center">
           <button
             onClick={() => setVisibleCount((prev) => prev + 3)}
-            className="bg-yellow-400 hover:bg-yellow-300 text-black px-6 py-2 rounded-full"
+            className="bg-yellow-400 hover:bg-yellow-300 text-black px-6 py-2 rounded-full transition"
           >
             Load More
           </button>

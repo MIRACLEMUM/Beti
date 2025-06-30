@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { useBet } from "../context/BetContext"; // 👈 import
+import { useBet } from "../context/BetContext";
 
 export default function MatchDetailsModal({ match, onClose }) {
   const [showBetForm, setShowBetForm] = useState(false);
   const [stake, setStake] = useState("");
-  const { placeBet } = useBet(); // 👈 use context
+  const { placeBet } = useBet();
 
   if (!match) return null;
 
@@ -14,7 +14,7 @@ export default function MatchDetailsModal({ match, onClose }) {
       return;
     }
 
-    placeBet(match, stake); // 👈 store the bet
+    placeBet(match, stake);
     alert(`✅ Bet placed on ${match.home} vs ${match.away} with ₦${stake}`);
     setStake("");
     setShowBetForm(false);
@@ -22,27 +22,29 @@ export default function MatchDetailsModal({ match, onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-white rounded-lg p-6 w-full max-w-md relative">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 px-4 sm:px-6">
+      <div className="bg-white rounded-lg p-5 sm:p-6 w-full max-w-md sm:max-w-lg relative shadow-lg">
+        {/* Close Button */}
         <button
-          className="absolute top-2 right-2 text-gray-500 hover:text-black"
+          className="absolute top-2 right-2 text-gray-500 hover:text-black text-xl"
           onClick={onClose}
         >
           ✕
         </button>
 
-        <h2 className="text-xl font-bold mb-4">
+        {/* Match Heading */}
+        <h2 className="text-lg sm:text-xl font-bold mb-4 text-center">
           {match.home} vs {match.away}
         </h2>
 
-        <p className="text-sm text-gray-600 mb-2">
-          <strong>Status:</strong> {match.status}
-        </p>
-        <p className="text-sm text-gray-600 mb-2">
-          <strong>League:</strong> {match.league}
-        </p>
+        {/* Match Info */}
+        <div className="space-y-1 text-sm text-gray-600 mb-4">
+          <p><strong>Status:</strong> {match.status}</p>
+          <p><strong>League:</strong> {match.league}</p>
+        </div>
 
-        <div className="grid grid-cols-3 text-center my-4">
+        {/* Probabilities */}
+        <div className="grid grid-cols-3 gap-2 text-center text-sm sm:text-base mb-4">
           <div>
             <div className="font-semibold text-gray-800">1</div>
             <div>{match.probabilities[0]}%</div>
@@ -57,12 +59,14 @@ export default function MatchDetailsModal({ match, onClose }) {
           </div>
         </div>
 
+        {/* Prediction */}
         <div className="text-center mb-4">
-          <span className="bg-yellow-300 px-3 py-1 rounded font-medium">
+          <span className="bg-yellow-300 px-3 py-1 rounded-full text-sm sm:text-base font-medium text-black">
             Prediction: {match.prediction}
           </span>
         </div>
 
+        {/* Bet Form */}
         {showBetForm ? (
           <div className="mt-4">
             <input
@@ -70,7 +74,7 @@ export default function MatchDetailsModal({ match, onClose }) {
               placeholder="Enter stake amount"
               value={stake}
               onChange={(e) => setStake(e.target.value)}
-              className="w-full border px-3 py-2 rounded mb-3"
+              className="w-full border px-3 py-2 rounded mb-3 text-sm sm:text-base"
             />
             <button
               onClick={handleBetSubmit}

@@ -1,14 +1,13 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Toast from "./Toast"; // ✅ import the Toast component
+import Toast from "./Toast";
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [user, setUser] = useState(null);
-  const [toastMessage, setToastMessage] = useState(""); // ✅ toast state
+  const [toastMessage, setToastMessage] = useState("");
   const navigate = useNavigate();
 
-  // Load user from localStorage on mount
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
@@ -16,19 +15,18 @@ export default function Header() {
     }
   }, []);
 
-  // Logout function
   const handleLogout = () => {
     localStorage.removeItem("user");
     setUser(null);
-    setToastMessage("Logged out successfully ✅"); // ✅ show toast
-    navigate("/"); // ✅ go to homepage
+    setToastMessage("Logged out successfully ✅");
+    navigate("/");
   };
 
   return (
     <header className="bg-white shadow-md fixed top-0 left-0 w-full z-50">
-      <div className="max-w-7xl mx-auto flex justify-between items-center px-4 py-3">
+      <div className="max-w-7xl mx-auto flex justify-between items-center px-4 sm:px-6 py-3">
         {/* Logo */}
-        <Link to="/" className="text-2xl font-bold text-blue-600">
+        <Link to="/" className="text-xl sm:text-2xl font-bold text-blue-600">
           ⚽ Beti
         </Link>
 
@@ -49,7 +47,7 @@ export default function Header() {
             </>
           ) : (
             <>
-              <span className="text-sm text-gray-600">
+              <span className="text-sm text-gray-600 whitespace-nowrap">
                 👤 {user.username || user.email}
               </span>
               <button
@@ -71,10 +69,10 @@ export default function Header() {
         </button>
       </div>
 
-      {/* Mobile Dropdown */}
+      {/* Mobile Menu */}
       {menuOpen && (
         <div className="md:hidden bg-white border-t shadow-sm">
-          <nav className="flex flex-col px-4 py-2 space-y-2">
+          <nav className="flex flex-col px-4 py-3 space-y-2 text-sm">
             <Link to="/" onClick={() => setMenuOpen(false)} className="py-2 border-b text-gray-700 hover:bg-gray-100">
               Home
             </Link>
@@ -90,7 +88,7 @@ export default function Header() {
               </>
             ) : (
               <>
-                <div className="py-2 text-sm text-gray-600">👤 {user.username || user.email}</div>
+                <div className="py-2 text-gray-600">👤 {user.username || user.email}</div>
                 <button
                   onClick={() => {
                     handleLogout();
@@ -106,7 +104,7 @@ export default function Header() {
         </div>
       )}
 
-      {/* ✅ Toast Message */}
+      {/* Toast */}
       {toastMessage && (
         <Toast message={toastMessage} onClose={() => setToastMessage("")} />
       )}

@@ -20,7 +20,7 @@ export function BetProvider({ children }) {
 
     const newBet = {
       id: Date.now(),
-      userEmail: loggedInUser.email, // ✅ save who placed it
+      userEmail: loggedInUser.email,
       matchId: match.id,
       home: match.home,
       away: match.away,
@@ -31,6 +31,29 @@ export function BetProvider({ children }) {
     };
 
     setBets((prev) => [...prev, newBet]);
+  };
+
+  // ✅ Simulate match result and update bets as won/lost
+  const updateBetsWithResult = (matchId, result) => {
+    setBets((prev) =>
+      prev.map((bet) => {
+        if (bet.matchId !== matchId) return bet;
+
+        let won = false;
+        if (
+          (result === "home" && bet.prediction === bet.home) ||
+          (result === "away" && bet.prediction === bet.away) ||
+          (result === "draw" && bet.prediction.toLowerCase() === "draw")
+        ) {
+          won = true;
+        }
+
+        return {
+          ...bet,
+          result: won ? "won" : "lost",
+        };
+      })
+    );
   };
 
   // Remove a single bet by ID
@@ -47,7 +70,15 @@ export function BetProvider({ children }) {
   };
 
   return (
-    <BetContext.Provider value={{ bets, placeBet, removeBet, clearBets }}>
+    <BetContext.Provider
+      value={{
+        bets,
+        placeBet,
+        removeBet,
+        clearBets,
+        updateBetsWithResult, // ✅ Added this
+      }}
+    >
       {children}
     </BetContext.Provider>
   );

@@ -1,11 +1,8 @@
-// src/App.jsx
-
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import FloatingBetSlip from "./components/FloatingBetSlip";
-
-// ✅ Add this line
 import ProtectedRoute from "./components/ProtectedRoute";
+import Footer from "./components/Footer"; // ✅ Footer import
 
 // Pages
 import HomePage from "./pages/HomePage";
@@ -16,28 +13,33 @@ import Dashboard from "./pages/Dashboard";
 export default function App() {
   return (
     <Router>
-      <Header />
+      <div className="flex flex-col min-h-screen">
+        {/* Header always at the top */}
+        <Header />
 
-      <main className="pt-20 p-4 max-w-7xl mx-auto relative">
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignupPage />} />
+        {/* Main content below header */}
+        <main className="flex-1 pt-20 px-4 sm:px-8 max-w-7xl mx-auto w-full">
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignupPage />} />
+            <Route
+              path="/dashboard"
+              element={
+                <ProtectedRoute>
+                  <Dashboard />
+                </ProtectedRoute>
+              }
+            />
+          </Routes>
+        </main>
 
-          {/* ✅ Protected Dashboard Route */}
-          <Route
-            path="/dashboard"
-            element={
-              <ProtectedRoute>
-                <Dashboard />
-              </ProtectedRoute>
-            }
-          />
-        </Routes>
-      </main>
+        {/* ✅ Footer added here */}
+        <Footer />
 
-      {/* ✅ Always show floating betslip */}
-      <FloatingBetSlip />
+        {/* Floating Bet Slip stays fixed */}
+        <FloatingBetSlip />
+      </div>
     </Router>
   );
 }
